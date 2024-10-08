@@ -48,6 +48,21 @@ export enum PlanType {
   AnnualLeave
 }
 
+const monthMap: Record<string, number> = {
+  January: 0,
+  February: 1,
+  March: 2,
+  April: 3,
+  May: 4,
+  June: 5,
+  July: 6,
+  August: 7,
+  September: 8,
+  October: 9,
+  November: 10,
+  December: 11
+};
+
 type AppState = {
   planMode: boolean;
   planType: PlanType;
@@ -187,7 +202,10 @@ export const AppStateProvider = ({ children }: { children: ReactNode }) => {
         daysMap: Record<string, number[]>
       ) => {
         Object.entries(daysMap).forEach(([month, daysArray]) => {
-          const monthIndex = new Date(`${month} 1`).getMonth();
+          const monthIndex = monthMap[month];
+          if (monthIndex === undefined) {
+            throw new Error(`Invalid month name: ${month}`);
+          }
           daysArray.forEach((day) => {
             const date = new Date(Date.UTC(currentYear, monthIndex, day));
             newEventMap.set(date.toISOString().split("T")[0], planType);
