@@ -9,10 +9,12 @@ import {
   TooltipTrigger
 } from "@/components/ui/tooltip";
 import { PlanType, useAppState } from "@/app/_providers/app-state-context";
+import { useAppSettings } from "@/app/_providers/app-settings-context";
 
 export function CalendarHeader() {
   const { planType, setPlanType, remainingHomeOffice, remainingAnnualLeave } =
     useAppState();
+  const { appSettings } = useAppSettings();
 
   return (
     <div className="grid items-center justify-items-center pt-4 pb-2">
@@ -41,7 +43,7 @@ export function CalendarHeader() {
         <Separator orientation="vertical" />
         <Tooltip>
           <TooltipTrigger asChild>
-            <div className="flex space-x-1">
+            <div className="select-none flex space-x-1">
               <Badge
                 variant={remainingHomeOffice < 1 ? "destructive" : "outline"}
               >
@@ -72,6 +74,17 @@ export function CalendarHeader() {
             <TooltipContent>Annual Leave</TooltipContent>
           </Tooltip>
         </Toggle>
+      </div>
+      <Separator className="my-2" />
+      <div className="space-y-1">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <h4 className="select-none text-sm font-medium">
+              {appSettings.currentYear}
+            </h4>
+          </TooltipTrigger>
+          <TooltipContent>Current Year</TooltipContent>
+        </Tooltip>
       </div>
     </div>
   );

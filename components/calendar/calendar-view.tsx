@@ -78,7 +78,9 @@ export function CalendarView({
                 default:
                   return String(d.getDate());
               }
-            }
+            },
+            formatCaption: (date) =>
+              date.toLocaleString("default", { month: "long" })
           }}
         />
       </div>
