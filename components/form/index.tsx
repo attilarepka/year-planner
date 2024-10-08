@@ -43,7 +43,7 @@ export function YearForm() {
           <FormField
             control={form.control}
             name="selectedYear"
-            render={({ field }) => (
+            render={() => (
               <FormItem>
                 <FormLabel className="flex justify-center">
                   Selected Year
@@ -54,7 +54,6 @@ export function YearForm() {
                       yearStart={yearStart}
                       yearEnd={yearEnd}
                       form={form}
-                      {...field}
                     />
                   </div>
                 </FormControl>
