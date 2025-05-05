@@ -8,7 +8,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-[80vh] font-[var(--font-geist-sans)]">
-      <main className="flex flex-grow items-center justify-center w-full min-h-[80vh]">
+      <main className="flex grow items-center justify-center w-full min-h-[80vh]">
         {planMode ? <Calendar /> : <YearForm />}
       </main>
     </div>
