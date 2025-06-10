@@ -4,7 +4,7 @@ import { useReactToPrint } from "react-to-print";
 
 interface PrintContextType {
   onPrint: () => void;
-  printRef: React.RefObject<HTMLDivElement> | null;
+  printRef: React.RefObject<HTMLDivElement | null>;
 }
 
 const PrintContext = createContext<PrintContextType | undefined>(undefined);
