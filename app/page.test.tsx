@@ -21,7 +21,9 @@ describe("Home Page", () => {
       eventMap: new Map<string, AppStateContext.PlanType>()
     });
     vi.spyOn(AppSettingsContext, "useAppSettings").mockReturnValue({
-      appSettings: {}
+      appSettings: {
+        currentYear: new Date().getFullYear()
+      }
     });
     vi.spyOn(HolidaysContext, "useHolidays").mockReturnValue({
       holidays: []
