@@ -32,6 +32,8 @@ const formSchema = z.object({
   country: z.string().min(1, { message: "Country must be selected" })
 });
 
+export type FormValues = z.infer<typeof formSchema>;
+
 export function useFormState(): {
   formSchema: typeof formSchema;
   yearStart: number;
@@ -39,8 +41,6 @@ export function useFormState(): {
 } {
   return { formSchema, yearStart, yearEnd };
 }
-
-type FormValues = z.infer<typeof formSchema>;
 
 export enum PlanType {
   Default,

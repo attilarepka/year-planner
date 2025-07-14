@@ -1,4 +1,3 @@
-import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -11,15 +10,20 @@ import {
   FormMessage
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useAppState, useFormState } from "@/app/_providers/app-state-context";
+import {
+  FormValues,
+  useAppState,
+  useFormState
+} from "@/app/_providers/app-state-context";
 import { FormCombobox } from "./combobox";
 import { CarouselPanel } from "./carousel";
+import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 
 export function YearForm() {
   const { updateAppState } = useAppState();
   const { formSchema, yearStart, yearEnd } = useFormState();
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<FormValues>({
+    resolver: standardSchemaResolver(formSchema),
     defaultValues: {
       selectedYear: new Date().getFullYear(),
       homeOffice: 150,
