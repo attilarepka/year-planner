@@ -68,15 +68,27 @@ describe("MainNav", () => {
     });
 
     await user.click(screen.getByText("File"));
+    await waitFor(() => {
+      expect(screen.getByText("New")).toBeInTheDocument();
+    });
     await user.click(screen.getByText("New"));
 
     await user.click(screen.getByText("File"));
+    await waitFor(() => {
+      expect(screen.getByText("Open...")).toBeInTheDocument();
+    });
     await user.click(screen.getByText("Open..."));
 
     await user.click(screen.getByText("File"));
+    await waitFor(() => {
+      expect(screen.getByText("Save")).toBeInTheDocument();
+    });
     await user.click(screen.getByText("Save"));
 
     await user.click(screen.getByText("File"));
+    await waitFor(() => {
+      expect(screen.getByText("Print")).toBeInTheDocument();
+    });
     await user.click(screen.getByText("Print"));
 
     await waitFor(() => {
