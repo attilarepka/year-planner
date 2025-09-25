@@ -68,16 +68,20 @@ describe("MainNav", () => {
     });
 
     await user.click(screen.getByText("File"));
-    await user.click(screen.getByText("New"));
+    const newItem = await screen.findByText("New");
+    await user.click(newItem);
 
     await user.click(screen.getByText("File"));
-    await user.click(screen.getByText("Open..."));
+    const openItem = await screen.findByText("Open...");
+    await user.click(openItem);
 
     await user.click(screen.getByText("File"));
-    await user.click(screen.getByText("Save"));
+    const saveItem = await screen.findByText("Save");
+    await user.click(saveItem);
 
     await user.click(screen.getByText("File"));
-    await user.click(screen.getByText("Print"));
+    const printItem = await screen.findByText("Print");
+    await user.click(printItem);
 
     await waitFor(() => {
       expect(onNew).toHaveBeenCalledTimes(1);
