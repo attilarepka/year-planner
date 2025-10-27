@@ -16,17 +16,17 @@ const yearEnd = new Date().getFullYear() + 5;
 
 const formSchema = z.object({
   selectedYear: z.coerce
-    .number()
+    .number<number>()
     .gte(yearStart)
     .lte(yearEnd, {
       message: `Year must be between ${yearStart} and ${yearEnd}`
     }),
   homeOffice: z.coerce
-    .number()
+    .number<number>()
     .gte(0)
     .lte(366, { message: "Home office days must be between 0 and 366" }),
   annualLeave: z.coerce
-    .number()
+    .number<number>()
     .gte(0)
     .lte(366, { message: "Annual leave days must be between 0 and 366" }),
   country: z.string().min(1, { message: "Country must be selected" })
