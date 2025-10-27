@@ -1,31 +1,28 @@
 import { vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 
-// Taken from:
-// https://github.com/davidjerleke/embla-carousel/tree/master/packages/embla-carousel/src/__tests__/mocks
-
+const matchingMediaQueries: string[] = [];
 Object.defineProperty(window, "matchMedia", {
   writable: true,
   value: vi.fn().mockImplementation((query: string) => ({
     matches: matchingMediaQueries.includes(query),
     addEventListener: vi.fn(),
-    removeEventListener: vi.fn()
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn()
   }))
 });
-const matchingMediaQueries: string[] = [];
-Object.defineProperty(window, "IntersectionObserver", {
-  writable: true,
-  value: vi.fn().mockImplementation(() => ({
-    observe: vi.fn(),
-    unobserve: vi.fn(),
-    disconnect: vi.fn()
-  }))
-});
-Object.defineProperty(window, "ResizeObserver", {
-  writable: true,
-  value: vi.fn().mockImplementation(() => ({
-    observe: vi.fn(),
-    unobserve: vi.fn(),
-    disconnect: vi.fn()
-  }))
-});
+
+class IntersectionObserverMock {
+  observe = vi.fn();
+  unobserve = vi.fn();
+  disconnect = vi.fn();
+  takeRecords = vi.fn(() => []);
+}
+vi.stubGlobal("IntersectionObserver", IntersectionObserverMock);
+
+class ResizeObserverMock {
+  observe = vi.fn();
+  unobserve = vi.fn();
+  disconnect = vi.fn();
+}
+vi.stubGlobal("ResizeObserver", ResizeObserverMock);
