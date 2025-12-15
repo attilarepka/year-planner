@@ -60,7 +60,7 @@
     "jsdom": "^27.2.0",
     "postcss": "^8",
     "prettier": "3.7.4",
-    "tailwindcss": "^4.1.16",
+    "tailwindcss": "^4.1.18",
     "typescript": "^5",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^4.0.8"
