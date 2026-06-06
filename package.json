@@ -12,6 +12,9 @@
         "coverage:watch": "vitest --coverage",
         "lint": "next lint"
     },
+    "overrides": {
+        "postcss": "^8.5.10"
+    },
     "dependencies": {
         "@hookform/resolvers": "^5.2.2",
         "@radix-ui/react-alert-dialog": "^1.1.15",
@@ -58,7 +61,7 @@
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-prettier": "^5.5.5",
         "jsdom": "^29.1.0",
-        "postcss": "^8",
+        "postcss": "^8.5.10",
         "prettier": "3.8.3",
         "tailwindcss": "^4.2.2",
         "typescript": "^6.0.3",
