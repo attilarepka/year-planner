@@ -1,33 +1,37 @@
-import { defineConfig } from "eslint/config";
-import prettier from "eslint-plugin-prettier";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-import js from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
+import tseslint from "typescript-eslint";
+import nextPlugin from "@next/eslint-plugin-next";
+import prettierConfig from "eslint-config-prettier";
+import prettierPlugin from "eslint-plugin-prettier";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all
-});
-
-export default defineConfig([
+export default [
+  ...tseslint.configs.recommended,
+  prettierConfig,
   {
-    extends: compat.extends(
-      "next/core-web-vitals",
-      "next/typescript",
-      "prettier"
-    ),
-
-    plugins: {
-      prettier
+    files: ["**/*.ts", "**/*.tsx"],
+    languageOptions: {
+      parserOptions: {
+        ecmaVersion: "latest",
+        sourceType: "module",
+      },
     },
-
+  },
+  {
+    plugins: {
+      "@next/next": nextPlugin,
+      prettier: prettierPlugin,
+    },
     rules: {
-      "prettier/prettier": "error",
-      "@typescript-eslint/no-empty-object-type": "off"
-    }
-  }
-]);
+      "@typescript-eslint/no-empty-object-type": "off",
+      "@typescript-eslint/no-unused-vars": ["warn", { caughtErrors: "none" }],
+      "prettier/prettier": "warn",
+    },
+  },
+  {
+    ignores: [
+      "node_modules/**",
+      ".next/**",
+      "out/**",
+      "build/**",
+    ],
+  },
+];

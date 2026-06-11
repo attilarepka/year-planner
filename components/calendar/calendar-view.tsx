@@ -21,9 +21,15 @@ export function CalendarView({
   onSelect: (date: Date[] | undefined) => void;
 }) {
   const { appSettings } = useAppSettings();
-  const { holidays } = useHolidays();
+  const { holidays, longWeekends } = useHolidays();
   const { eventMap } = useEventMap();
   const { printRef } = usePrintContext();
+
+  const isBridgeDay = (date: string): boolean => {
+    return longWeekends?.some((weekend) =>
+      weekend.bridgeDays.includes(date)
+    ) ?? false;
+  };
 
   const Formatter = ({
     icon: Icon,
@@ -61,7 +67,8 @@ export function CalendarView({
           disabled={[
             { dayOfWeek: [0, 6] },
             (date) => {
-              return isHoliday(formatDate(date), holidays) !== null;
+              const formattedDate = formatDate(date);
+              return isHoliday(formattedDate, holidays) !== null || isBridgeDay(formattedDate);
             }
           ]}
           components={{
@@ -74,6 +81,15 @@ export function CalendarView({
                   <Formatter
                     icon={PartyPopper}
                     content={holiday.name}
+                    {...buttonProps}
+                  />
+                );
+              }
+              if (isBridgeDay(date)) {
+                return (
+                  <Formatter
+                    icon={PartyPopper}
+                    content="Bridge day"
                     {...buttonProps}
                   />
                 );

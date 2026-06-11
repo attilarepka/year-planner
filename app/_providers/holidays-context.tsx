@@ -1,10 +1,12 @@
 "use client";
-import { getHolidays, Holiday } from "@/lib/calendar-util";
+import { getHolidays, getLongWeekends, Holiday, LongWeekend } from "@/lib/calendar-util";
 import React, { createContext, useCallback, useContext, useState } from "react";
 
 type HolidaysContextType = {
   holidays: Holiday[];
+  longWeekends: LongWeekend[];
   loadHolidays: (year: number, country: string) => Promise<void>;
+  loadLongWeekends: (year: number, country: string) => Promise<void>;
 };
 
 const HolidaysContext = createContext<HolidaysContextType | undefined>(
@@ -25,6 +27,7 @@ export const HolidaysProvider = ({
   children: React.ReactNode;
 }) => {
   const [holidays, setHolidays] = useState<Holiday[]>([]);
+  const [longWeekends, setLongWeekends] = useState<LongWeekend[]>([]);
 
   const loadHolidays = useCallback(async (year: number, country: string) => {
     try {
@@ -35,8 +38,17 @@ export const HolidaysProvider = ({
     }
   }, []);
 
+  const loadLongWeekends = useCallback(async (year: number, country: string) => {
+    try {
+      const fetchedLongWeekends = await getLongWeekends(year, country);
+      setLongWeekends(fetchedLongWeekends);
+    } catch (error) {
+      console.error("Error fetching long weekends:", error);
+    }
+  }, []);
+
   return (
-    <HolidaysContext.Provider value={{ holidays, loadHolidays }}>
+    <HolidaysContext.Provider value={{ holidays, longWeekends, loadHolidays, loadLongWeekends }}>
       {children}
     </HolidaysContext.Provider>
   );
