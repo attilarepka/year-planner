@@ -26,9 +26,10 @@ export function CalendarView({
   const { printRef } = usePrintContext();
 
   const isBridgeDay = (date: string): boolean => {
-    return longWeekends?.some((weekend) =>
-      weekend.bridgeDays.includes(date)
-    ) ?? false;
+    return (
+      longWeekends?.some((weekend) => weekend.bridgeDays.includes(date)) ??
+      false
+    );
   };
 
   const Formatter = ({
@@ -65,10 +66,13 @@ export function CalendarView({
           disableNavigation
           onSelect={onSelect}
           disabled={[
-            { dayOfWeek: [0, 6] },
+            { dayOfWeek: [0] },
             (date) => {
               const formattedDate = formatDate(date);
-              return isHoliday(formattedDate, holidays) !== null || isBridgeDay(formattedDate);
+              return (
+                isHoliday(formattedDate, holidays) !== null ||
+                isBridgeDay(formattedDate)
+              );
             }
           ]}
           components={{
