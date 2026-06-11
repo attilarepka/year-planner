@@ -92,15 +92,16 @@ export const AppStateProvider = ({ children }: { children: ReactNode }) => {
   const [remainingHomeOffice, setRemainingHomeOffice] = useState<number>(0);
   const [remainingAnnualLeave, setRemainingAnnualLeave] = useState<number>(0);
 
-  const { loadHolidays } = useHolidays();
+  const { loadHolidays, loadLongWeekends } = useHolidays();
   const { appSettings, setAppSettings } = useAppSettings();
   const { eventMap, setEventMap } = useEventMap();
 
   useEffect(() => {
     if (appSettings.currentYear && appSettings.country) {
       loadHolidays(appSettings.currentYear, appSettings.country);
+      loadLongWeekends(appSettings.currentYear, appSettings.country);
     }
-  }, [appSettings, loadHolidays]);
+  }, [appSettings, loadHolidays, loadLongWeekends]);
 
   useEffect(() => {
     let homeOfficeCount = 0;

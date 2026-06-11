@@ -22,6 +22,7 @@ interface LongWeekend {
   endDate: string;
   dayCount: number;
   needBridgeDay: boolean;
+  bridgeDays: string[];
 }
 
 const fetchData = async <T>(url: string): Promise<T> => {

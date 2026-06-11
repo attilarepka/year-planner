@@ -20,6 +20,9 @@ const mockContexts = (overrides = {}) => {
   });
   vi.spyOn(HolidaysContext, "useHolidays").mockReturnValue({
     holidays: [],
+    longWeekends: [],
+    loadHolidays: vi.fn(),
+    loadLongWeekends: vi.fn(),
     ...overrides.holidays
   });
   vi.spyOn(EventMapContext, "useEventMap").mockReturnValue({
@@ -108,5 +111,48 @@ describe("CalendarView", () => {
     expect(disabledHoliday).toBeInTheDocument();
     fireEvent.click(disabledHoliday.closest("button")!);
     expect(mockOnSelect).not.toHaveBeenCalled();
+  });
+
+  it("displays party popper icon for bridge days", () => {
+    mockContexts({
+      holidays: {
+        holidays: [],
+        longWeekends: [
+          {
+            startDate: "2024-01-01",
+            endDate: "2024-01-04",
+            dayCount: 4,
+            needBridgeDay: true,
+            bridgeDays: ["2024-01-02"]
+          }
+        ]
+      }
+    });
+    renderCalendarView(mockOnSelect);
+
+    const bridgeDayIcon = document.querySelector(".lucide-party-popper");
+    expect(bridgeDayIcon).toBeInTheDocument();
+  });
+
+  it("disables bridge days in the calendar", () => {
+    mockContexts({
+      holidays: {
+        holidays: [],
+        longWeekends: [
+          {
+            startDate: "2024-01-01",
+            endDate: "2024-01-04",
+            dayCount: 4,
+            needBridgeDay: true,
+            bridgeDays: ["2024-01-02"]
+          }
+        ]
+      }
+    });
+    renderCalendarView(mockOnSelect);
+
+    const bridgeDayIcon = document.querySelector(".lucide-party-popper");
+    expect(bridgeDayIcon).toBeInTheDocument();
+    expect(bridgeDayIcon.closest("button")).toBeDisabled();
   });
 });
