@@ -14,6 +14,7 @@ import { useEventMap } from "@/app/_providers/event-map-context";
 import { useAppSettings } from "@/app/_providers/app-settings-context";
 import { useHolidays } from "@/app/_providers/holidays-context";
 import { CalendarHeader } from "./calendar-header";
+import { cn } from "@/lib/utils";
 
 export function CalendarView({
   onSelect
@@ -78,6 +79,8 @@ export function CalendarView({
           components={{
             DayButton: (props: DayButtonProps) => {
               const { day, ...buttonProps } = props;
+              const isWeekend =
+                day.date.getDay() === 6 || day.date.getDay() === 0;
               const date = formatDate(day.date);
               const holiday = isHoliday(date, holidays);
               if (holiday) {
@@ -117,7 +120,15 @@ export function CalendarView({
                     />
                   );
                 default:
-                  return <button {...buttonProps} />;
+                  return (
+                    <button
+                      {...props}
+                      className={cn(
+                        props.className,
+                        isWeekend && "text-muted-foreground"
+                      )}
+                    />
+                  );
               }
             }
           }}
