@@ -10,27 +10,27 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { siteConfig } from "@/config/site";
 
 describe("Home Page", () => {
-  const MockedTooltipProvider: React.FC = ({ children }) => (
+  const MockedTooltipProvider = ({ children }: { children?: any }) => (
     <TooltipProvider>{children}</TooltipProvider>
   );
   it("renders the YearForm when planMode is true", () => {
     vi.spyOn(AppStateContext, "useAppState").mockReturnValue({
       planMode: true
-    });
+    } as any);
     vi.spyOn(EventMapContext, "useEventMap").mockReturnValue({
       eventMap: new Map<string, AppStateContext.PlanType>()
-    });
+    } as any);
     vi.spyOn(AppSettingsContext, "useAppSettings").mockReturnValue({
       appSettings: {
         currentYear: new Date().getFullYear()
       }
-    });
+    } as any);
     vi.spyOn(HolidaysContext, "useHolidays").mockReturnValue({
       holidays: []
-    });
+    } as any);
     vi.spyOn(PrintContext, "usePrintContext").mockReturnValue({
       printRef: { current: null }
-    });
+    } as any);
 
     render(
       <MockedTooltipProvider>
@@ -45,7 +45,7 @@ describe("Home Page", () => {
   it("renders the YearForm when planMode is false", () => {
     vi.spyOn(AppStateContext, "useAppState").mockReturnValue({
       planMode: false
-    });
+    } as any);
 
     render(<Home />);
 

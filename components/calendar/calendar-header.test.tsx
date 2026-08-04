@@ -6,7 +6,7 @@ import * as AppStateContext from "@/app/_providers/app-state-context";
 import { siteConfig } from "@/config/site";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
-const mockContexts = (overrides = {}) => {
+const mockContexts = (overrides: any = {}) => {
   vi.spyOn(AppStateContext, "useAppState").mockReturnValue({
     planMode: false,
     setPlanType: vi.fn(),
@@ -37,11 +37,11 @@ describe("CalendarHeader", () => {
     expect(screen.getByText(siteConfig.title)).toBeInTheDocument();
     expect(screen.getByText(siteConfig.description)).toBeInTheDocument();
 
-    const homeOfficeIcon = document.querySelector(".lucide-house");
+    const homeOfficeIcon = document.querySelector(".lucide-house") as Element;
     fireEvent.focus(homeOfficeIcon);
     expect(screen.getAllByText("Home Office")[0]).toBeInTheDocument();
 
-    const annualLeaveIcon = document.querySelector(".lucide-tree-palm");
+    const annualLeaveIcon = document.querySelector(".lucide-tree-palm") as Element;
     fireEvent.focus(annualLeaveIcon);
     expect(screen.getAllByText("Annual Leave")[0]).toBeInTheDocument();
 
@@ -59,8 +59,8 @@ describe("CalendarHeader", () => {
     });
     renderCalendarHeader();
 
-    const homeOfficeIcon = document.querySelector(".lucide-house");
-    const annualLeaveIcon = document.querySelector(".lucide-tree-palm");
+    const homeOfficeIcon = document.querySelector(".lucide-house") as Element;
+    const annualLeaveIcon = document.querySelector(".lucide-tree-palm") as Element;
 
     fireEvent.click(homeOfficeIcon);
     expect(setPlanType).toHaveBeenCalledWith(

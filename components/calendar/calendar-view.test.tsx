@@ -9,7 +9,7 @@ import * as HolidaysContext from "@/app/_providers/holidays-context";
 import * as EventMapContext from "@/app/_providers/event-map-context";
 import * as PrintContext from "@/app/_providers/print-context";
 
-const mockContexts = (overrides = {}) => {
+const mockContexts = (overrides: any = {}) => {
   vi.spyOn(AppSettingsContext, "useAppSettings").mockReturnValue({
     appSettings: {
       currentYear: 2024,
@@ -17,22 +17,22 @@ const mockContexts = (overrides = {}) => {
       annualLeaveLimit: 2
     },
     ...overrides.appSettings
-  });
+  } as any);
   vi.spyOn(HolidaysContext, "useHolidays").mockReturnValue({
     holidays: [],
     longWeekends: [],
     loadHolidays: vi.fn(),
     loadLongWeekends: vi.fn(),
     ...overrides.holidays
-  });
+  } as any);
   vi.spyOn(EventMapContext, "useEventMap").mockReturnValue({
     eventMap: new Map<string, PlanType>(),
     ...overrides.eventMap
-  });
+  } as any);
   vi.spyOn(PrintContext, "usePrintContext").mockReturnValue({
     printRef: { current: null },
     ...overrides.printContext
-  });
+  } as any);
 };
 
 const renderCalendarView = (onSelect = vi.fn()) => {
@@ -47,7 +47,7 @@ const renderCalendarView = (onSelect = vi.fn()) => {
 };
 
 describe("CalendarView", () => {
-  let mockOnSelect: ReturnType<typeof vi.fn>;
+  let mockOnSelect: any;
 
   beforeEach(() => {
     mockOnSelect = vi.fn();
@@ -68,7 +68,7 @@ describe("CalendarView", () => {
     });
     renderCalendarView(mockOnSelect);
 
-    const publicHolidayCell = document.querySelector(".lucide-party-popper");
+    const publicHolidayCell = document.querySelector(".lucide-party-popper") as Element;
 
     expect(publicHolidayCell).toBeInTheDocument();
     expect(publicHolidayCell.closest("button")).toBeDisabled();
@@ -84,7 +84,7 @@ describe("CalendarView", () => {
     });
     renderCalendarView(mockOnSelect);
 
-    const homeOfficeIcon = document.querySelector(".lucide-house");
+    const homeOfficeIcon = document.querySelector(".lucide-house") as Element;
     expect(homeOfficeIcon).toBeInTheDocument();
   });
 
@@ -106,7 +106,7 @@ describe("CalendarView", () => {
     });
     renderCalendarView(mockOnSelect);
 
-    const disabledHoliday = document.querySelector(".lucide-party-popper");
+    const disabledHoliday = document.querySelector(".lucide-party-popper") as Element;
 
     expect(disabledHoliday).toBeInTheDocument();
     fireEvent.click(disabledHoliday.closest("button")!);
@@ -130,7 +130,7 @@ describe("CalendarView", () => {
     });
     renderCalendarView(mockOnSelect);
 
-    const bridgeDayIcon = document.querySelector(".lucide-party-popper");
+    const bridgeDayIcon = document.querySelector(".lucide-party-popper") as Element;
     expect(bridgeDayIcon).toBeInTheDocument();
   });
 
@@ -151,7 +151,7 @@ describe("CalendarView", () => {
     });
     renderCalendarView(mockOnSelect);
 
-    const bridgeDayIcon = document.querySelector(".lucide-party-popper");
+    const bridgeDayIcon = document.querySelector(".lucide-party-popper") as Element;
     expect(bridgeDayIcon).toBeInTheDocument();
     expect(bridgeDayIcon.closest("button")).toBeDisabled();
   });

@@ -22,7 +22,7 @@ describe("MainNav", () => {
   it("should render all menu items correctly", async () => {
     vi.spyOn(AppStateContext, "useAppState").mockReturnValue({
       planMode: true
-    });
+    } as any);
 
     render(
       <MainNav
@@ -47,7 +47,7 @@ describe("MainNav", () => {
   it("should call the appropriate callbacks when menu items are clicked", async () => {
     vi.spyOn(AppStateContext, "useAppState").mockReturnValue({
       planMode: true
-    });
+    } as any);
 
     render(
       <MainNav
@@ -94,7 +94,7 @@ describe("MainNav", () => {
   it('should disable the "Print" menu item when planMode is false', async () => {
     vi.spyOn(AppStateContext, "useAppState").mockReturnValue({
       planMode: false
-    });
+    } as any);
 
     render(
       <MainNav
@@ -126,7 +126,7 @@ describe("MainNav", () => {
   it('should enable the "Print" menu item when planMode is true', async () => {
     vi.spyOn(AppStateContext, "useAppState").mockReturnValue({
       planMode: true
-    });
+    } as any);
 
     render(
       <MainNav
