@@ -26,45 +26,29 @@ interface LongWeekend {
 }
 
 const fetchData = async <T>(url: string): Promise<T> => {
-  return new Promise((resolve, reject) => {
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => resolve(data as T))
-      .catch((error) => reject(error));
-  });
-};
-
-const getCountriesApi = (): string => {
-  return apiBase + availableCountries;
-};
-
-const getPublicHolidaysApi = (year: number, locale: string): string => {
-  return apiBase + publicHolidays + year + pathSeparator + locale;
-};
-
-const getLongWeekendApi = (year: number, countryCode: string): string => {
-  return apiBase + longWeekends + year + pathSeparator + countryCode;
+  const response = await fetch(url);
+  return response.json() as Promise<T>;
 };
 
 const getHolidays = async (
   year: number,
   locale: string
 ): Promise<Holiday[]> => {
-  const url = getPublicHolidaysApi(year, locale);
-  return await fetchData<Holiday[]>(url);
+  const url = apiBase + publicHolidays + year + pathSeparator + locale;
+  return fetchData<Holiday[]>(url);
 };
 
 const getCountries = async (): Promise<Country[]> => {
-  const url = getCountriesApi();
-  return await fetchData<Country[]>(url);
+  const url = apiBase + availableCountries;
+  return fetchData<Country[]>(url);
 };
 
 const getLongWeekends = async (
   year: number,
   countryCode: string
 ): Promise<LongWeekend[]> => {
-  const url = getLongWeekendApi(year, countryCode);
-  return await fetchData<LongWeekend[]>(url);
+  const url = apiBase + longWeekends + year + pathSeparator + countryCode;
+  return fetchData<LongWeekend[]>(url);
 };
 
 const formatDate = (date: Date): string => {
