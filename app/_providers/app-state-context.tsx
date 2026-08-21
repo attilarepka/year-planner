@@ -149,22 +149,19 @@ export const AppStateProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const saveAppState = (): string => {
-    const daysByType = (type: PlanType) => {
+    const daysByType = (type: PlanType): Record<string, number[]> => {
       const days: Record<string, number[]> = {};
-
       eventMap.forEach((eventType, dateStr) => {
         if (eventType === type) {
           const date = new Date(dateStr);
           const monthName = date.toLocaleString("default", { month: "long" });
           const day = date.getDate();
-
           if (!days[monthName]) {
             days[monthName] = [];
           }
           days[monthName].push(day);
         }
       });
-
       return days;
     };
 

@@ -17,10 +17,10 @@ interface MainNavProps {
 }
 
 export function MainNav({
-  onNew: onNew,
-  onOpen: onOpen,
-  onSave: onSave,
-  onPrint: onPrint
+  onNew,
+  onOpen,
+  onSave,
+  onPrint
 }: MainNavProps) {
   const { planMode } = useAppState();
 
