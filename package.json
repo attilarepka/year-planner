@@ -43,7 +43,7 @@
         "react-to-print": "^3.3.0",
         "tailwind-merge": "^3.5.0",
         "tailwindcss-animate": "^1.0.7",
-        "zod": "^4.6.2"
+        "zod": "^4.6.5"
     },
     "devDependencies": {
         "@tailwindcss/postcss": "^4.3.3",
