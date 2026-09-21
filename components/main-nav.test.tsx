@@ -1,7 +1,7 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MainNav } from "./main-nav";
-import { expect, describe, it, vi, Mock, beforeEach } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, Mock, vi } from "vitest";
 import * as AppStateContext from "@/app/_providers/app-state-context";
 
 describe("MainNav", () => {
@@ -9,15 +9,28 @@ describe("MainNav", () => {
   let onOpen: Mock;
   let onSave: Mock;
   let onPrint: Mock;
+  let user: ReturnType<typeof userEvent.setup>;
 
   beforeEach(() => {
     onNew = vi.fn();
     onOpen = vi.fn();
     onSave = vi.fn();
     onPrint = vi.fn();
+    user = userEvent.setup();
   });
 
-  const user = userEvent.setup();
+  afterEach(() => {
+    cleanup();
+    vi.restoreAllMocks();
+  });
+
+  async function openFileMenu() {
+    const trigger = screen.getByText("File");
+    await act(async () => {
+      trigger.focus();
+    });
+    await user.keyboard("{Enter}");
+  }
 
   it("should render all menu items correctly", async () => {
     vi.spyOn(AppStateContext, "useAppState").mockReturnValue({
@@ -35,8 +48,8 @@ describe("MainNav", () => {
 
     expect(screen.getByText("File")).toBeInTheDocument();
 
+    await openFileMenu();
     await waitFor(() => {
-      user.click(screen.getByText("File"));
       expect(screen.getByText("New")).toBeInTheDocument();
       expect(screen.getByText("Open...")).toBeInTheDocument();
       expect(screen.getByText("Save")).toBeInTheDocument();
@@ -59,25 +72,25 @@ describe("MainNav", () => {
     );
     expect(screen.getByText("File")).toBeInTheDocument();
 
-    await user.click(screen.getByText("File"));
+    await openFileMenu();
     await waitFor(() => {
       expect(screen.getByText("New")).toBeInTheDocument();
     });
     await user.click(screen.getByText("New"));
 
-    await user.click(screen.getByText("File"));
+    await openFileMenu();
     await waitFor(() => {
       expect(screen.getByText("Open...")).toBeInTheDocument();
     });
     await user.click(screen.getByText("Open..."));
 
-    await user.click(screen.getByText("File"));
+    await openFileMenu();
     await waitFor(() => {
       expect(screen.getByText("Save")).toBeInTheDocument();
     });
     await user.click(screen.getByText("Save"));
 
-    await user.click(screen.getByText("File"));
+    await openFileMenu();
     await waitFor(() => {
       expect(screen.getByText("Print")).toBeInTheDocument();
     });
@@ -105,7 +118,7 @@ describe("MainNav", () => {
       />
     );
 
-    await user.click(screen.getByText("File"));
+    await openFileMenu();
     await waitFor(() => {
       expect(screen.getByText("New")).toBeInTheDocument();
       expect(screen.getByText("Open...")).toBeInTheDocument();
@@ -137,7 +150,7 @@ describe("MainNav", () => {
       />
     );
 
-    await user.click(screen.getByText("File"));
+    await openFileMenu();
     await waitFor(() => {
       expect(screen.getByText("New")).toBeInTheDocument();
       expect(screen.getByText("Open...")).toBeInTheDocument();
