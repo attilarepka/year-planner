@@ -62,7 +62,7 @@
         "eslint-plugin-prettier": "^5.5.7",
         "jsdom": "^31.0.0",
         "postcss": "^8.5.10",
-        "prettier": "3.9.10",
+        "prettier": "3.10.1",
         "tailwindcss": "^4.3.5",
         "typescript": "^7.0.2",
         "vitest": "^5.0.2"
